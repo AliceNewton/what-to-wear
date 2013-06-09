@@ -1,0 +1,9 @@
+{% extends "home.html" %}
+{% block body %}
+	<h2>Do you have any formal meetings planned?</h2>
+	<form action="{% url 'get_weather' %}" method="post">
+		<input type="submit" name="qanswer" value="Yes">
+		<input type="submit" name="qanswer" value="No">
+	</form>
+
+{% endblock %}

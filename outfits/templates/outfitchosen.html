@@ -1,0 +1,17 @@
+{% extends "home.html" %}
+{% block body %}
+	Good choice! Have a great day :)
+	<div class = "outfitimg">
+				<img src ="{{ url_for('static', filename= outfit[0]['outfit']) }}"/>
+				{% if outfit[0]['bottoms'] != "none" %}
+					<img src ="{{ url_for('static', filename= outfit[0]['bottoms']) }}" width="98" height="100"/>
+					<img src ="{{ url_for('static', filename= outfit[0]['cover']) }}" width="98" height="100"/>
+					<img src ="{{ url_for('static', filename= outfit[0]['shoes']) }}" width="98" height="100"/>
+				{% else %}
+					<img src ="{{ url_for('static', filename= outfit[0]['cover']) }}" width="150" height="150"/>
+					<img src ="{{ url_for('static', filename= outfit[0]['shoes']) }}" width="150" height="150"/>
+				{% endif %}
+		
+	</div>
+
+{% endblock %}
