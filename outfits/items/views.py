@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.db.models import Q
 from datetime import datetime, date, timedelta
 import urllib2
 import json
@@ -13,8 +14,9 @@ def index(request):
 
 
 def message(request):
-#    latest_poll_list = Poll.objects.all().order_by('-pub_date')[:5]
-    context = {}
+    context = {
+        "today":date.today()
+    }
     return render(request, 'meetingq.html', context)
 
 
@@ -33,9 +35,24 @@ def weather(request):
     smartmeeting = (qanswer == 'Yes')
 
     # pick outfit with appropriate criteria
-#    outfit = query_db("SELECT * FROM items WHERE rainproof=? AND smart=? AND DATE(lastworn) <= DATE('now', 'weekday 0', '-18 days')", (raining, smartmeeting))
-    outfits = Item.objects.filter(rainproof=raining, lastworn__lte=date.today()-timedelta(18))
+    outfits = Item.objects.filter(Q(rainproof=raining, smart=smartmeeting, lastworn__lte=date.today()-timedelta(12)) | Q(rainproof=raining, smart=smartmeeting, lastworn=None))
+    print outfits
     context = {
-        ''
+        'outfits':outfits,
+        'maxtemp':maxtemp,
+        'raining':raining,
+        "today":date.today(),
     }
-    return render(request, 'outfit.html', context_instance=context)
+    return render(request, 'outfit.html', context)
+
+
+def chosenoutfit(request):
+    mypk = request.POST['outfitid']
+    outfit = Item.objects.get(pk=mypk)
+    outfit.lastworn = date.today()
+    outfit.save()
+    context = {
+        'outfit':outfit,
+        'today':date.today(),
+    }
+    return render(request, 'outfitchosen.html', context)

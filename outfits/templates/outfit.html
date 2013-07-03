@@ -1,27 +1,27 @@
 {% extends "home.html" %}
 {% block body %}
-	
 	<div class = "outfitimg">
-		{% for o in outfit: %} 
+		{% for o in outfits %}
 			<div class="outfit one">
-				<img src ="{{ url_for('static', filename= o['outfit']) }}"/>
-				{% if o['bottoms'] != "none" %}
-					<img src ="{{ url_for('static', filename= o['bottoms']) }}" width="98" height="100"/>
+				<img src ="{{ o.outfit.url }}"/>
+				{% if o.bottoms %}
+					<img src ="{{ o.bottoms.url }}" width="98" height="100"/>
 				{% else %}
 					{% if maxtemp < 20 %}
-						<img src ="{{ url_for('static', filename= 'tights.jpg') }}" width="98" height="100"/>
+						<img src ="/static/tights.jpg" width="98" height="100"/>
 					{% else %}
-						<img src ="{{ url_for('static', filename= 'sunglasses.jpg') }}" width="98" height="100"/>
+						<img src ="/static/sunglasses.jpg" width="98" height="100"/>
 					{% endif %}
 				{% endif %}
-				<img src ="{{ url_for('static', filename= o['cover']) }}" width="98" height="100"/>
-				<img src ="{{ url_for('static', filename= o['shoes']) }}" width="98" height="100"/>
-				{% if 'rain' in weatherDesc %}
+				<img src ="{{ o.cover.url }}" width="98" height="100"/>
+				<img src ="{{ o.shoes.url }}" width="98" height="100"/>
+				{% if raining %}
 					It's going to rain today :-(.
 				{% endif %}
-				It's going to be about {{maxtemp}}°C today.
-				<form action="{{ url_for('chosenoutfit') }}" method="post">
-					<input type="hidden" name="outfitid" value="{{o['id']}}">
+				It's going to be about {{ maxtemp }}°C today.
+				<form action="{% url 'chosenoutfit' %}" method="post">
+                    {% csrf_token %}
+					<input type="hidden" name="outfitid" value="{{ o.pk }}">
 					<input type="submit" value="Pick this one!">
 					<input type="button" value="Another one">
 				</form>

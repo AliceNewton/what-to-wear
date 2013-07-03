@@ -37,3 +37,8 @@ nosetests.xml
 .DS_Store
 
 *.db
+
+/outfits/media/
+
+/venv/
+

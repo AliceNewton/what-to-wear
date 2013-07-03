@@ -9,5 +9,5 @@ class Item(models.Model):
     shoes = models.ImageField(upload_to="images")
     rainproof = models.BooleanField()
     smart = models.BooleanField()
-    lastworn = models.DateField()
+    lastworn = models.DateField(null=True, blank=True)
 
