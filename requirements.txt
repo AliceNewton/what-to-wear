@@ -5,3 +5,5 @@ gunicorn==17.5
 ipython==0.13.2
 psycopg2==2.5.1
 wsgiref==0.1.2
+boto
+django-storages
