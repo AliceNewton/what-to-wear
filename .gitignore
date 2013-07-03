@@ -38,7 +38,5 @@ nosetests.xml
 
 *.db
 
-/outfits/media/
-
-/venv/
+/media/
 
