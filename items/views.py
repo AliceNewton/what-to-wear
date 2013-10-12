@@ -22,7 +22,7 @@ def message(request):
 
 def weather(request):
     today = date.today()
-    url = 'http://free.worldweatheronline.com/feed/weather.ashx?key=a6d8eaaef8203121120909&q=SW7&num_of_days=1&format=json'
+    url = 'http://api.worldweatheronline.com/free/v1/weather.ashx?key=e9nj5cryspvb9y3k2jvn54sg&q=SW7&num_of_days=1&format=json'
     json_raw = urllib2.urlopen(url).read()
     weatherdata = json.loads(json_raw)
     maxtemp = weatherdata['data']['weather'][0]['tempMaxC']
