@@ -8,7 +8,7 @@ from items.models import Item
 
 
 def index(request):
-    return HttpResponse("Hello, world. ")
+    return HttpResponse("Hello, world..")
 
 
 

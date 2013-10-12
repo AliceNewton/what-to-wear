@@ -12,3 +12,5 @@ heroku run python manage.py syncdb
 
 
 heroku open
+
+test
