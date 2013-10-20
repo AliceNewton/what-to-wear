@@ -1,11 +1,10 @@
-body            { font-family: sans-serif; background: #eee 0 -20px; padding: 0; margin: 0; }
-a, h1, h2       { color: #377BA8; }
-h1, h2          { font-family: 'Georgia', serif; }
-h1              { border-bottom: 2px solid #eee;}
-h2              { font-size: 1.2em; }
+body            { background: #ecf0f1 0 -20px; padding: 0; margin: 0; }
+p, a, h1, h2    { color: #2c3e50; font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;}
+h1              { border-bottom: 2px solid #eee; text-align:center;}
+h2              { font-size: 1.2em; font-weight:100;}
 
-.page           { margin: 2em auto; width: 22em; border: 5px solid #ccc;
-                  padding: 0.8em; background: white; }
+.page           { margin: 2em auto; width: 22em;
+                  padding: 0.8em; }
 
 .error          { background: #F0D6D6; padding: 0.5em; }
 
@@ -18,8 +17,9 @@ input[type='button'], input[type='submit'] {
 	width: 47%;
 	padding: 0;
 	height: 30px;
-	background: #ddd;
+	background: #2c3e50;
 	font-size: 14px;
+	color: white;
 	border: none;
 	font-weight: bold;
 	display: inline-block;
