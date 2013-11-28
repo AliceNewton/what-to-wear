@@ -13,7 +13,7 @@ def env_var(key, default=None):
     return val
 
 # Django settings for djangoproject project.
-DEBUG = env_var('DJ_DEBUG', False) #Unless env var is set to True, debug is off
+DEBUG = env_var('DJ_DEBUG', True) #Unless env var is set to True, debug is off
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -24,8 +24,32 @@ SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 MANAGERS = ADMINS
 
+# Attempt at DB settings to run locally:
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
+#}
 DATABASES = {}
-DATABASES['default'] = dj_database_url.config()
+
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db.sqlite3'
+        }
+    }
+else:
+    DATABASES['default'] = dj_database_url.config()
+    AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+    STATIC_URL = S3_URL
+
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -133,7 +157,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    'storages',
+    #'storages',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -167,11 +191,3 @@ LOGGING = {
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-if not DEBUG:
-    AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
-    STATIC_URL = S3_URL
